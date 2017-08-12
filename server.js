@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const UserController = require("./controllers/user");
 const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/pets
@@ -9,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/pets
 
 const connection = mongoose.connection;
 connection.on('connected', () => {
-  console.log('Mongoose Connected Successfully');    
+  console.log("We're Live Hoes!");    
 }); 
 
 // If the connection throws an error
@@ -19,14 +20,14 @@ connection.on('error', (err) => {
 
 
 
-app.use(express.static(__dirname + '/client/build/'));
-  app.get('/', (req,res) => {
-    res.sendFile(__dirname + '/client/build/index.html')
-  })
-
+// app.use(express.static(__dirname + '/client/build/'));
+//   app.get('/', (req,res) => {
+//     res.sendFile(__dirname + '/client/build/index.html')
+//   })
+app.use('/api/user', UserController);
 app.use(bodyParser.json());
 app.get('/', (req,res) => {
-  res.send('Hello world!')
+  res.send('hola betches!')
 })
 
 const PORT = process.env.PORT || 3001;
