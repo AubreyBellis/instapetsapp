@@ -70,5 +70,7 @@ var PostModel = mongoose.model("Post", PostSchema);
 
 
 module.exports = {
-    User: UserModel, Item:ItemModel, Comment:CommentModel, Post:PostModel
+
+    User: UserModel, ItemModel, CommentModel, PostModel
+
 };
