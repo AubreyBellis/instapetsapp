@@ -1,5 +1,5 @@
 var Schema = require("../db/schema");
 var mongoose = require('mongoose');
 
-var User = Schema.User;
-module.exports = User;
+var UserProfile = Schema.UserProfile;
+module.exports = UserProfile;

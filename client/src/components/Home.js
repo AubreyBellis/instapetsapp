@@ -11,7 +11,7 @@ class Home extends Component {
   }
 
   componentWillMount(){
-    axios.get("/api/user").then((res) => {
+    axios.get("/api/userProfile").then((res) => {
       this.setState({users: res.data});
     });
   }
@@ -29,7 +29,7 @@ class Home extends Component {
           {this.state.users.map((user, i) => {
             return (
               <li key={i}>
-                <Link to={`/user/${user._id}`}> {user.userName}'s Profile </Link>
+                <Link to={`/userprofile/${user._id}`}> {user.userName}'s Profile </Link>
               </li>
             );
           })}

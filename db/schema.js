@@ -12,7 +12,7 @@ const CommentSchema = mongoose.Schema({
   created_at: Date
 })
 
-const UserSchema = mongoose.Schema({
+const UserProfileSchema = mongoose.Schema({
     userName: String,
     email: { type: String, required: true, unique: true },
     pet: String,
@@ -20,17 +20,15 @@ const UserSchema = mongoose.Schema({
   });
   
 const PostSchema = mongoose.Schema({
-  userName: String,
-  img: String,
-  caption: String,
-  comment: [CommentSchema],
-  create_at: Date
-})
+  newTitle:String,
+  newImage:String,
+  newText:String
+});
 
 
 
 
-UserSchema.pre('save', function(next){
+UserProfileSchema.pre('save', function(next){
     now = new Date();
     this.updated_at = now;
     if ( !this.created_at ) {
@@ -63,7 +61,7 @@ UserSchema.pre('save', function(next){
     next();
   });
 
-var UserModel = mongoose.model("User", UserSchema);
+var UserProfileModel = mongoose.model("UserProfile", UserProfileSchema);
 var ItemModel = mongoose.model("Item",ItemSchema);
 var CommentModel = mongoose.model("Comment", CommentSchema);
 var PostModel = mongoose.model("Post", PostSchema);
@@ -71,6 +69,6 @@ var PostModel = mongoose.model("Post", PostSchema);
 
 module.exports = {
 
-    User: UserModel, ItemModel, CommentModel, PostModel
+    UserProfile: UserProfileModel, Item:ItemModel, Comment:CommentModel, Post:PostModel
 
 };

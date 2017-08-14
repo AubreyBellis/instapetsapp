@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const UserController = require("./controllers/user");
+const UserController = require("./controllers/userProfile");
 const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/pets
@@ -24,7 +24,7 @@ connection.on('error', (err) => {
 //   app.get('/', (req,res) => {
 //     res.sendFile(__dirname + '/client/build/index.html')
 //   })
-app.use('/api/user', UserController);
+app.use('/api/userprofile', UserController);
 app.use(bodyParser.json());
 app.get('/', (req,res) => {
   res.send('hola betches!')

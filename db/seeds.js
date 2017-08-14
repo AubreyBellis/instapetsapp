@@ -6,24 +6,27 @@ mongoose.connect(process.env.MONGODB_URI);
 
 var Comment = require('../models/comment');
 var Post = require('../models/post');
-var User = require('../models/user');
+var UserProfile = require('../models/userProfile');
 var Item = require('../models/item');
 
 mongoose.Promise = global.Promise;
 
-User.remove({}, function(err){
+UserProfile.remove({}, function(err){
     console.log(err);
 });    
+Post.remove({}, function(err){
+  console.log(err);
+});
 
 
 
 
 
 // creating users
-var aubrey = new User({
-  userName: 'AuBs03',
+var aubrey = new UserProfile({
+  userName: 'Reese',
   email: 'aubreyb@gmail.com',
-   pet:'German Shepherd Dog',
+  pet:'German Shepherd Dog',
   imgBoard: [
     {
       item:"http://i.imgur.com/C4uNhxa.jpg",
@@ -44,7 +47,7 @@ var aubrey = new User({
   ]
 });
 
-var jessica = new User({
+var jessica = new UserProfile({
   userName: 'JMatt',
   email: 'Jessica@gmail.com',
   pet: 'Hound',
@@ -69,14 +72,14 @@ var jessica = new User({
 });
 
 
-var mike = new User({
+var mike = new UserProfile({
   userName:'DirtyMike',
   email: 'filthymike@gmail.com',
   pet: 'amphibians',
   imgBoard: [
     {
-      item:"http://i.imgur.com/C4uNhxa.jpg",
-      caption:"Bae"
+      item:"",
+      caption:""
     },
     {
       item:"",
@@ -92,13 +95,17 @@ var mike = new User({
     },
   ]
 });
+ var NewPost = new Post({
+  newTitle:"",
+  newImage:"",
+  newText:""
+ });
 
 
 
 
 
-
-
+NewPost.save().then(() => console.log("new post saved!"));
 
 aubrey.save().then(() => console.log("aubrey saved!"));
 jessica.save().then(() => console.log("j saved"));
