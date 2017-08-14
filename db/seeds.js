@@ -26,8 +26,8 @@ var aubrey = new User({
    pet:'German Shepherd Dog',
   imgBoard: [
     {
-      item:"",
-      caption:""
+      item:"http://i.imgur.com/C4uNhxa.jpg",
+      caption:"Bae"
     },
     {
       item:"",
@@ -75,8 +75,8 @@ var mike = new User({
   pet: 'amphibians',
   imgBoard: [
     {
-      item:"",
-      caption:""
+      item:"http://i.imgur.com/C4uNhxa.jpg",
+      caption:"Bae"
     },
     {
       item:"",

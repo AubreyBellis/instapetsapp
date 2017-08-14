@@ -14,9 +14,10 @@ router.get("/", (req, res) => {
 
 
 
-//   newUser.save().then((category) => {
-//     res.json(category);
-//   }).catch(err => console.log(err));
-// })
+  router.get("/:id", (req, res) => {
+    User.findById(req.params.id).then((users) => {
+      res.json(users);
+    })
+  })
 
 module.exports = router;

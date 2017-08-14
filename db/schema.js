@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
     userName: String,
     email: { type: String, required: true, unique: true },
     pet: String,
-    img: [ItemSchema]
+    imgBoard: [ItemSchema]
   });
   
 const PostSchema = mongoose.Schema({
