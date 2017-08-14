@@ -95,7 +95,7 @@ var mike = new UserProfile({
     },
   ]
 });
- var NewPost = new Post({
+ var Post = new Post({
   newTitle:"",
   newImage:"",
   newText:""
@@ -105,7 +105,7 @@ var mike = new UserProfile({
 
 
 
-NewPost.save().then(() => console.log("new post saved!"));
+Post.save().then(() => console.log("post saved!"));
 
 aubrey.save().then(() => console.log("aubrey saved!"));
 jessica.save().then(() => console.log("j saved"));
