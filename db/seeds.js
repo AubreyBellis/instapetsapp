@@ -4,111 +4,76 @@ mongoose.connect(process.env.MONGODB_URI);
 
 //
 
-var Comment = require('../models/comment');
+var Comment = require('../models/userComment');
 var Post = require('../models/post');
 var UserProfile = require('../models/userProfile');
-var Item = require('../models/item');
+var User = require('../models/user');
 
 mongoose.Promise = global.Promise;
 
-UserProfile.remove({}, function(err){
+User.remove({}, function(err){
     console.log(err);
 });    
 Post.remove({}, function(err){
   console.log(err);
 });
+// UserComment.remove({}, function(err){
+//   console.log(err);
+// });
 
 
 
 
 
 // creating users
-var aubrey = new UserProfile({
+const user1 = new User({
   userName: 'Reese',
-  email: 'aubreyb@gmail.com',
-  pet:'German Shepherd Dog',
-  imgBoard: [
-    {
-      item:"http://i.imgur.com/C4uNhxa.jpg",
-      caption:"Bae"
-    },
-    {
-      item:"",
-      caption:""
-    },
-    {
-      item: "",
-      caption:""
-    },
-    {
-      item:"",
-      caption:""
-    },
-  ]
+  password:'abbelove3',
+  image:""
 });
-
-var jessica = new UserProfile({
-  userName: 'JMatt',
-  email: 'Jessica@gmail.com',
-  pet: 'Hound',
-  imgBoard: [
-    {
-      item:"",
-      caption:""
-    },
-    {
-      item:"",
-      caption:""
-    },
-    {
-      item: "",
-      caption:""
-    },
-    {
-      item:"",
-      caption:""
-    },
-  ]
+const user2 = new User({
+  userName: "PiperGirl",
+  password: "jMatt",
+  image:""
 });
-
-
-var mike = new UserProfile({
-  userName:'DirtyMike',
-  email: 'filthymike@gmail.com',
-  pet: 'amphibians',
-  imgBoard: [
-    {
-      item:"",
-      caption:""
-    },
-    {
-      item:"",
-      caption:""
-    },
-    {
-      item: "",
-      caption:""
-    },
-    {
-      item:"",
-      caption:""
-    },
-  ]
-});
- var Post = new Post({
-  newTitle:"",
+//creating post 
+const Post1 = new Post({
+  newTitle:"A day at the Park",
   newImage:"",
-  newText:""
+  newText:"",
+  comment:[]
+ });
+const Post2 = new Post({
+  newTitle:"Feelin' this weather",
+  newImage:"",
+  newText:"",
+  comment:[]
+ });
+ const Post3 = new Post({
+  newTitle:"Always happy!",
+  newImage:"",
+  newText:"",
+  comment:[]
  });
 
+ const userProfile1 = new UserProfile({
+  username:"Reese",
+  pet:"German Shepherd Dog",
+  images:[]
+ })
 
 
 
 
-Post.save().then(() => console.log("post saved!"));
 
-aubrey.save().then(() => console.log("aubrey saved!"));
-jessica.save().then(() => console.log("j saved"));
-mike.save().then(() => console.log('Mike Saved'));
+Post1.save().then(() => console.log("post saved!"));
+Post2.save().then(() => console.log("post saved!"));
+Post3.save().then(() => console.log("post saved!"));
+
+user1.save().then(() => console.log("user saved!"));
+user2.save().then(() => console.log("user saved"));
+
+userProfile1.save().then(() => console.log("new user profile saved"));
+
 
 mongoose.connection.close();

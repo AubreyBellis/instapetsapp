@@ -1,29 +1,30 @@
 var mongoose = require('mongoose');
 
 
-const ItemSchema = mongoose.Schema(
-  { img: 
-      { data: Buffer, contentType: String }
-  }
-);
+
 
 const CommentSchema = mongoose.Schema({
   text: String,
   created_at: Date
 })
 
-const UserProfileSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
     userName: String,
-    email: { type: String, required: true, unique: true },
-    pet: String,
-    imgBoard: [ItemSchema]
+    password: { type: String, required: true, unique: true },
+    image:String
   });
   
 const PostSchema = mongoose.Schema({
-  newTitle:String,
+ newTitle:String,
   newImage:String,
-  newText:String
+  newText:String,
+  comment:[CommentSchema]
 });
+const UserProfileSchema = mongoose.Schema({
+  username:String,
+  pet:String,
+  image:[PostSchema]
+})
 
 
 
@@ -52,7 +53,7 @@ UserProfileSchema.pre('save', function(next){
     }
     next();
   });
-  ItemSchema.pre('save', function(next){
+  UserSchema.pre('save', function(next){
     now = new Date();
     this.updated_at = now;
     if ( !this.created_at ) {
@@ -60,15 +61,14 @@ UserProfileSchema.pre('save', function(next){
     }
     next();
   });
-
-var UserProfileModel = mongoose.model("UserProfile", UserProfileSchema);
-var ItemModel = mongoose.model("Item",ItemSchema);
-var CommentModel = mongoose.model("Comment", CommentSchema);
+var UserModel = mongoose.model("User", UserSchema);
+var UserProfileModel = mongoose.model("UserProfile",UserProfileSchema);
+var UserCommentModel = mongoose.model("UserComment", CommentSchema);
 var PostModel = mongoose.model("Post", PostSchema);
 
 
 module.exports = {
 
-    UserProfile: UserProfileModel, Item:ItemModel, Comment:CommentModel, Post:PostModel
+    UserProfile: UserProfileModel, User:UserModel, UserComment:UserCommentModel, Post:PostModel
 
 };

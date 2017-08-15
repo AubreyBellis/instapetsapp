@@ -1,16 +1,16 @@
 
-var express = require('express');
-var router = express.Router();
+// var express = require('express');
+// var router = express.Router();
 
-var UserProfile = require('../models/UserProfile');
-var Post = require('../models/Post');
-// var Comment = require('../models/comment');
+// var UserProfile = require('../models/UserProfile');
+// var Post = require('../models/Post');
+// // var Comment = require('../models/comment');
 
-router.get("/", (req, res) => {
-    UserProfile.find().then((users) => {
-      res.json(users);
-    });
-  });
+// router.get("/", (req, res) => {
+//     UserProfile.find().then((users) => {
+//       res.json(users);
+//     });
+//   });
 
 
 
@@ -20,4 +20,4 @@ router.get("/", (req, res) => {
   //   })
   // })
 
-module.exports = router;
+// module.exports = router;
