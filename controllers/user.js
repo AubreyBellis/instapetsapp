@@ -1,20 +1,9 @@
-// var express = require('express');
-// var router = express.Router();
-
-// var User = require('../models/User');
-
-
-// router.get("/", (req, res) => {
-//     UserProfile.find().then((users) => {
-//       res.json(users);
-//     });
-//   });
 const express = require('express');
 const User = require("../models/user");
 const router = express.Router();
 
 
-//this needs to be secured in the future.
+
 router.get("/", (req, res) => {
     User.find().then((users) => {
         res.json(users);
@@ -50,7 +39,7 @@ router.get("/:id/delete", (req, res) => {
         console.log(`user ${userId} deleted their account :'(`);
         res.send("success");
     }).catch((err) => {
-        console.log("user failed to delete, haha");
+        console.log("no success");
         console.log(err);
     })
 })
@@ -59,18 +48,18 @@ router.post("/login/", (req, res) => {
     const password = req.body.password;
 
     User.find().then((users) => {
-        const userIWant = users.find((user) => {
+        const findUser = users.find((user) => {
             return user.username === username;
         });
         if (userIWant.password === password){
-            res.json(userIWant);
+            res.json(findUser);
         } else {
             res.send("wrong password");
         }
-        res.json(userIWant);
+        res.json(findUser);
     })
         .catch((err) => {
-            res.send("username does not exist");
+            res.send("can't not find username");
         })
 })
 router.post("/signup", (req, res) => {
@@ -80,7 +69,7 @@ router.post("/signup", (req, res) => {
     const newUser = new User();
     newUser.username = username;
     newUser.password = password;
-    newUser.image = imageUrl;
+    newUser.image = image;
 
     newUser.save().then((user) => {
         res.json(user);

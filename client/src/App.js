@@ -7,7 +7,11 @@ import AddNewPost from './components/AddNewPost';
 import LoginView from './components/LoginView';
 import Signup from './components/SignUp';
 import LoginButton from './components/Login';
+import NavBar from './styles/NavBar';
+import UserProfile from './components/UserProfile';
 import axios from 'axios';
+
+
 
 
 class App extends Component {
@@ -17,6 +21,7 @@ class App extends Component {
         loggedIn: false,
         userId: "",
         username: "",
+        password:"",
         image: "",
         loginError: "",
     }
@@ -38,6 +43,7 @@ axios.post(`/api/user/login/`, {username, password})
       newState.loggedIn = true;
       newState.username = res.data.username;
       newState.image = res.data.image;
+      newState.password = res.data.password;
       newState.loginError = "";
     } else {
       newState.loginError = res.data;
@@ -57,6 +63,7 @@ axios.post('/api/user/signup/', {username, password})
       newState.userId = res.data._id;
       newState.loggedIn = true;
       newState.username = res.data.username;
+      newState.password = res.data.password;
       newState.image = res.data.firstName;
       newState.loginError = "";
 
@@ -75,6 +82,7 @@ axios.get(`/api/user/${this.state.userId}/delete`).then(() => {
 _handleLogout = (event) => {
   const newState = {...this.state};
   newState.username = "";
+  newState.password = "";
   newState.image = "";
   newState.loginError = "";
   newState.loggedIn = false;
@@ -92,20 +100,20 @@ _handleLogout = (event) => {
     <div>
       <NavBar>
         <Link to="/">Home</Link>
-        <LoginButton loggedIn = {this.state.loggedIn}  handleLogout={this._handleLogout} firstName={this.state.firstName} username={this.state.username}/>
+        <LoginButton loggedIn = {this.state.loggedIn}  handleLogout={this._handleLogout} username={this.state.username} password={this.state.password}/>
       </NavBar>
     </div>
     <div>
         <Route exact path="/" component={Home} />
-        <Route exact path="/login" render={routeProps => 
-            <LoginView {...routeProps} 
+        <Route exact path="/login" render={userprofile => 
+            <LoginView {...userprofile} 
               handleLogin={this._handleLogin}
               loginError={this.state.loginError}
               loggedIn={this.state.loggedIn}
               username={this.state.username}
               />} />
-        <Route exact path="/signup" render={routeProps => 
-            <Signup {...routeProps}
+        <Route exact path="/signup" render={userprofile => 
+            <Signup {...userprofile}
               handleSignup={this._handleSignup}
               loggedIn={this.state.loggedIn}
               />} />

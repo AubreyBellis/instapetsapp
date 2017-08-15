@@ -4,7 +4,7 @@ mongoose.connect(process.env.MONGODB_URI);
 
 //
 
-var Comment = require('../models/userComment');
+var UserComment = require('../models/userComment');
 var Post = require('../models/post');
 var UserProfile = require('../models/userProfile');
 var User = require('../models/user');
@@ -20,8 +20,9 @@ Post.remove({}, function(err){
 // UserComment.remove({}, function(err){
 //   console.log(err);
 // });
-
-
+UserProfile.remove({}, function(err){
+  console.log(err);
+});
 
 
 
@@ -56,14 +57,18 @@ const Post2 = new Post({
   comment:[]
  });
 
- const userProfile1 = new UserProfile({
+ const UserProfile1 = new UserProfile({
   username:"Reese",
   pet:"German Shepherd Dog",
   images:[]
  })
 
 
-
+ const admin = new User({
+  username: "Aubrey",
+  password: "reese128",
+  admin: true,
+})
 
 
 Post1.save().then(() => console.log("post saved!"));
@@ -73,7 +78,7 @@ Post3.save().then(() => console.log("post saved!"));
 user1.save().then(() => console.log("user saved!"));
 user2.save().then(() => console.log("user saved"));
 
-userProfile1.save().then(() => console.log("new user profile saved"));
+UserProfile1.save().then(() => console.log("new user profile saved"));
 
 
 mongoose.connection.close();

@@ -30,6 +30,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Background from './BackgroundImage.jpg'
+
+var BackgroundImage = styled.div`
+{
+    backgroundimage:http://i.imgur.com/9ZQmEB5.jpg"(${Background})
+  }`
+  
 
 class Home extends Component {
     
@@ -41,21 +48,28 @@ class Home extends Component {
             height: 90vh;
             justify-content: center;
             align-items: center;
+            background-image:cover;
+           
            
             h1{
             text-align: center;
             align-content:center;
             font-size: 78px;
-            font-family: 'Frijole', cursive;
+            
             }
         `
         return (
+   
+        
           <TitleDiv>
+               <h1>Insta-Pet</h1>
               <div>
-                <h1>Insta-Pet</h1>
-                <img src="http://i.imgur.com/9ZQmEB5.jpg" alt="glasses"/>
-                  </div>
-            </TitleDiv>  
+                <BackgroundImage>
+        
+                <img src="http://i.imgur.com/cQRk6X4.jpg" alt= "BackgroundImage.jpg"/>
+                </BackgroundImage>
+                </div>
+           </TitleDiv>  
         );
     }
 }

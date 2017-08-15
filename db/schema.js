@@ -61,6 +61,7 @@ UserProfileSchema.pre('save', function(next){
     }
     next();
   });
+
 var UserModel = mongoose.model("User", UserSchema);
 var UserProfileModel = mongoose.model("UserProfile",UserProfileSchema);
 var UserCommentModel = mongoose.model("UserComment", CommentSchema);
