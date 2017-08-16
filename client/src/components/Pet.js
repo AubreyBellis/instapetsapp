@@ -1,63 +1,3 @@
-// import React, {Component} from "react";
-// import $ from "jquery";
-// import {Link} from "react-router";
-
-
-
-// class AddNewPost extends Component{
-//     constructor(props){
-//         super(props);
-//         this.state = {
-//             newTitle:"",
-//             newImage:"",
-//             newText:""
-//             // lengthDialog:false,
-//             // titleLengthDialog:false
-//         }
-//     }
-//     submitNewPost(){
-//         if(!this.state.newTitle || !this.state.newText ){
-//             return false;
-//         }
-//         let submitObject = {
-//             title:this.state.newTitle,
-//             image:this.state.newImage,
-//             text:this.state.newText
-//         };
-//         console.log("data I'm sending is", submitObject);
-//         $.ajax({
-//             url:"/api/posts",
-//             data:JSON.stringify(submitObject),
-//             type:"POST",
-//             contentType:"application/json",
-//             success:function(){
-                
-//             this.setState({newTitle:"", newImage:"", newText:""});
-//             }.bind(this),
-//             error:function(error){
-//                 console.error(error.toString());
-//             }
-//         });
-//     };
-//     render(){
-//         console.log("rendering AddNewPost component");
-//         return(
-//             <div>
-//                 <h1>New Post</h1>
-//                 </div>
-//         );
-//     }
-// }
-// export default AddNewPost;
-        
-//     //         <form>
-//     //         (<Input text={this.state.newTitle} onChange={this.titleChange.bind(this)} placeholder="Post title"/>)<br/>
-//     //         (<Input value={this.state.newImage} onChange={this.imageChange.bind(this)} placeholder="Post image"/>)<br />
-//     //         <Link to ="/">Back Home</Link>
-//     //         </form>
-//     //         )
-//     //     }
-//     // }
 
 
 import React, { Component } from 'react';
@@ -65,13 +5,28 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Link, Redirect } from "react-router-dom"
 
-
+const PetWrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: space-around;
+flex-wrap: wrap;
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+img {
+    height: 500px;
+    width: 800px;
+}
+`;
 class Pet extends Component {
     constructor() {
         super();
         this.state = {
             user: '',
-            redirect: false,
+            redirect: true,
             id: '',
             name: '',
             image: '',
@@ -91,14 +46,14 @@ class Pet extends Component {
               
             })
         })
-        // Get user
-        if (this.props.match.params.userId) {
+        // GET PET
+        if (this.props.match.params.petId) {
             this.setState({
                 userLogged: true,
             })
             axios.get(`/api/user/${this.props.match.params.userId}`)
                 .then( (res) => {
-                    this.setState({user: res.data});
+                    this.setState({pet: res.data});
                 })
                 .catch( (err) => {
                     console.log(err);
@@ -121,21 +76,22 @@ class Pet extends Component {
         } else {
             return (
                 <div>
-                    {/* <IndividualPartyStyle> */}
+                    <PetWrapper>
                         {this.state.userLogged ? <Link to={`/${this.state.user._id}/edit/${this.state.id}`}>Edit</Link> :
                             <Link to={`/edit/${this.state.id}`}>Edit</Link>}
 
                         <h1>Pet Name: {this.state.petname}</h1>
-                        <img src={this.state.image} alt=''></img>
+                        <img src= {this.state.image} alt=''></img>
                         <div>Description: {this.state.description}</div>
                         <br />
                         <br />
                         <br />
                         <button onClick={(e) => this._handleDelete(e, this.state.id)}>Delete</button>
-                        <br /><br />
+                        <br />
+                        <br />
                         {this.state.userLogged ? <Link to={`/${this.state.user._id}/pets`}>Go back</Link> :
                             <Link to={`/pets`}>Go back</Link>}
-                    {/* </IndividualPartyStyle> */}
+                    </PetWrapper>
                 </div>
             );
         }

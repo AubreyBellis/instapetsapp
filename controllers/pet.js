@@ -1,6 +1,6 @@
 const express = require('express');
 const Pet = require('../models/pet');
-const Board = require('../models/board');
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -23,15 +23,9 @@ router.get('/:petId', (req, res) => {
 
 router.post('/', (req, res) => {
     const newPet = new Pet();
-    newPet.PetName = req.body.petName
-    newPet.Image = req.body.Image
+    newPet.petname = req.body.petname
+    newPet.image = req.body.image
     newPet.description = req.body.description
-
-    const newBoard = req.body.board.map( (board) => {
-        return new Board(board);
-    })
-
-    newPet.boards = newBoards;
 
     newPet.save().then( (pet) => {
         res.json(pet);
@@ -51,7 +45,7 @@ router.put('/', (req, res) => {
 
 router.get('/delete/:petId', (req, res) => {
     Pet.findByIdAndRemove(req.params.petId).then( (pet) => {
-            console.log(`${pet.petName} was deleted`)
+            console.log(`${pet.petname} was deleted`)
         })
         .catch( (err) => {
             console.log(err);

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom"
 
 const PetStyle = styled.div`
-    img {
+    image {
         height: 200px;
         width: 500px;
     }
@@ -27,7 +27,7 @@ class Pets extends Component {
             console.log(error);
         })
 
-        // Get user
+        // GET USER
         if (this.props.match.params.userId) {
             this.setState({
                 userLogged: true,
@@ -47,20 +47,20 @@ class Pets extends Component {
             <div>
                 <h1>Pets</h1>
                 <div>
-                 {this.state.userLogged ? <Link to={`/${this.state.user._id}/createPet`}>Add a Pet</Link> :
-                    <Link to='/createPet'>Add a new pet!</Link>}  
+                 {this.state.userLogged ? <Link to={`/${this.state.user_id}/createpet`}>Add your pet to the pawty!</Link> :
+                    <Link to='/createpet'>Join the PAWty!</Link>}  
                 {this.state.pets.map( (pet, i) => {
                     return (
-                        <PetStyle key={i}>
-                        {pet.petName}
+                        <div key={i}>
+                        {pet.petname}
                         <img src={pet.image} alt='' />
-                        {this.state.userLogged ? <a href={`/${this.state.user._id}/pet/${pet._id}`}>Go to</a> : 
-                            <a href={`/pet/${pet._id}`}>Go to</a>}
-                        </PetStyle>
+                        {this.state.userLogged ? <a href={`/pets/${pet._id}`}>Go to</a> : 
+                            <a href={`/pets/${pet._id}`}>Go to</a>}
+                        </div>
                     )
                 })}
                 <br />
-                {this.state.userLogged ? <Link to={`/user/${this.state.user._id}`}>Go back to profile</Link> : null}
+                {this.state.userLogged ? <Link to={`/user/${this.state.user._id}`}>Go back</Link> : null}
                 </div>
             </div>
         );

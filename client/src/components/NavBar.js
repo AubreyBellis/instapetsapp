@@ -4,8 +4,8 @@ import { BrowserRouter as Redirect, Link } from 'react-router-dom';
 
 const NavBarStyle = styled.div`
   height: 30px;
-  background-color: black;
-  color: white;
+  background-color: grey;
+  color: blue;
   text-decoration: none;
   display: flex;
   justify-content: flex-end;
@@ -20,7 +20,7 @@ class NavBar extends Component {
   render() {
       return (
           <NavBarStyle>
-              <a href="/">PetPro</a>
+              <a href="/">Pet PAWty</a>
           </NavBarStyle>
       );
   }

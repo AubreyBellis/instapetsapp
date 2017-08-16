@@ -1,12 +1,12 @@
-// imp
+
 
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Pets from './components/Pets';
 import Pet from './components/Pet';
-// import Create from './components/CreateParty';
-// import EditParty from './components/EditParty';
-
+import CreatePet from './components/CreatePet';
+// import EditPet from './components/EditPet';
+import Description from './components/Description';
 import Users from './components/Users';
 import HomePage from './components/HomePage';
 import User from './components/User';
@@ -21,13 +21,13 @@ class App extends Component {
       <Router>
         <div>
           <NavBar />
-          {/* Routing User Not Logged In */}
+          {/* Routing User NOT Logged In */}
           <Route exact path='/' component={HomePage} />
           <Route exact path='/pets' component={Pets} />
           <Route exact path='/pet/:petId' component={Pet} />
-          {/* <Route exact path='/createParty' component={CreateParty} />
-          <Route exact path='/edit/:partyId' component={EditParty} /> */}
-          {/* <Route exact path='/streamers/:partyId' component={Streamers} /> */}
+          <Route exact path='/createPet' component={CreatePet} />
+          {/* <Route exact path='/edit/:partyId' component={EditParty} /> */} 
+          <Route exact path='/descriptions/:petId' component={Description} />
           <Route exact path='/users' component={Users} />
           <Route exact path='/user/:userId' component={User} />
           <Route exact path='/createUser'component={CreateUser} />
@@ -36,9 +36,9 @@ class App extends Component {
           {/* Routing User Is Logged In */}
           <Route exact path='/:userId/pets' component={Pets} />
           <Route exact path='/:userId/pet/:petId' component={Pet} />
-          {/* <Route exact path='/:userId/createParty' component={CreateParty} />
-          <Route exact path='/:userId/edit/:partyId' component={EditParty} />
-          <Route exact path='/:userId/streamers/:partyId' component={Streamers} /> */}
+          <Route exact path='/:userId/createPet' component={CreatePet} />
+          {/* <Route exact path='/:userId/edit/:petId' component={EditPet} /> */}
+          <Route exact path='/:userId/descriptions/:petId' component={Description} /> 
         </div>
       </Router>
     );

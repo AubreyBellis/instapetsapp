@@ -4,8 +4,8 @@ var mongoose = require('mongoose');
 
 
 const descriptionSchema = mongoose.Schema({
- Breed: String,
- Characteristics:String
+ breed: String,
+ characteristics:String
  
 })
 
@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
   });
   
 const petSchema = mongoose.Schema({
-  name:String,
+  petname:String,
   image:String,
   description:String,
 });
