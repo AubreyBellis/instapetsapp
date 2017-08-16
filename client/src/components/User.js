@@ -1,113 +1,91 @@
+// import React, { Component } from 'react';
+// import { Redirect, Link } from 'react-router-dom';
+
+// import User from './User';
+// import DeleteUser from './DeleteUser';
+
+// class UserProfile extends Component {
+//     render() {
+//         if (!this.props.loggedIn){
+//             return <Redirect to={`/`} />
+//         } else {
+//         return (
+//             <div>
+//                 <h1>PET PROFILE</h1>
+//                 <User username={this.props.username} />
+//                 <br />
+              
+//                 <br />
+//                 <DeleteUser deleteUser={this.props.deleteUser}/>
+//             </div>
+//         );}
+//     }
+// }
+
+// export default UserProfile;
+
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+import { Link, Redirect } from "react-router-dom"
 
 class User extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
-            editUserName: false,
-            editPassword: false,
-            image: "",
-            joinDate:Date
-           
+            redirect: false,
+            user: {
+                id:"",
+                username: '',
+                pet: '',
+                bio: ''
+               
+            }
         }
     }
+
     componentWillMount() {
-        const userId = this.props.userId;
-
-        axios.get(`/api/user/${userId}`).then((res) => {
-            const newState = {...this.state};
-            newState.username = res.data.username;
-            newState.pet = res.data.pet
-            newState.image = res.data.image;
-           
-            newState.userId = userId;
-
-            this.setState(newState);
-        });
-
+        const id = this.props.match.params.userId;
+        axios.get(`/api/user/${id}`).then((res) => {
+            this.setState({
+                user: {
+                    id: res.data._id,
+                    username: res.data.username,
+                    pet: res.data.pet,
+                    bio: res.data.bio,
+                 
+                }
+            })
+        })
     }
 
-    _toggleEditForm = () => {
-        const newState = {...this.state};
-        newState.editName = !this.state.editName;
-
-        this.setState(newState);
-    }
-    _togglePasswordForm = () => {
-        const newState = {...this.state};
-        newState.editPassword = !this.state.editPassword;
-
-        this.setState(newState);
-    }
-    _updatePassword = (event) => {
-        event.preventDefault();
-
-        const oldPassword = event.target.oldPassword.value;
-        const newPassword = event.target.newPassword.value;
-        const newPasswordConfirm = event.target.newPasswordConfirm.value;
-
-        if (!(newPassword === newPasswordConfirm)){
-            console.log("passwords do not match");
-            const newState = {...this.state};
-            newState.updatePasswordError = "passwords do not match"
-            this.setState(newState);
-        } else {
-        axios.put(`/api/user/${this.state.userId}/password/`, {oldPassword, newPassword}).then((res) =>{
-            const newState = {...this.state};
-            newState.updatePasswordError = res.data;
-            this.setState(newState);
-        })}
+    _handleDelete = (e, userId) => {
+        e.preventDefault();
+        axios.get(`/api/user/delete/${userId}`)
+            .then(() => console.log('User Deleted'))
+            .catch((err) => console.log(err));
+        this.setState({ redirect: true })
     }
 
-    _updateUserName = (event) => {
-        event.preventDefault();
-
-        const username = event.target.username.value;
-       
-
-        this.props.updateName(username);
-
-        const newState ={...this.state};
-        newState.editName = false;
-        this.setState(newState); 
-    }
     render() {
-        return (
-            <div>
-                <p>username: {this.state.admin ? `[ADMIN]:` : null}{this.state.username}</p>
-                <p>{`Name: ${this.props.username} ${this.props.pet}`}</p>
-                <button onClick={this._toggleEditForm}>{this.state.editName ? "hide" : "edit"}</button>
-                <form onSubmit={this._updateName}>
-                    {this.state.editName ?  
-                        <input name="username" type="text" placeholder={this.props.username}/>
-                        : null}
-                    {this.state.editName ?  
-                        <input name="pet" type="text" placeholder={this.props.pet}/>
-                        : null}
-                    {this.state.editName ?  
-                        <button>update</button>
-                        : null}
-                </form>
-                <p>Date joined: {this.state.joinDate}</p>
-                <button onClick={this._togglePasswordForm}>{this.state.editPassword ? "hide":"change password"}</button>
-                <form onSubmit={this._updatePassword}>
-                    {this.state.editPassword ?  
-                        <input type="password" placeholder="old password" name="oldPassword" required/>
-                        : null}
-                    {this.state.editPassword ?  
-                        <input type="password" placeholder="new password" name="newPassword" required/>
-                        : null}
-                    {this.state.editPassword ?  
-                        <input type="password" placeholder="confirm new password" name="newPasswordConfirm" required/>
-                        : null}
-                    {this.state.editPassword ?  
-                        <button>update</button>
-                        : null}
-                </form>
-                {this.state.updatePasswordError ? this.state.updatePasswordError : null}
-            </div> 
-        );
+        if (this.state.redirect) {
+            return <Redirect to={'/users'} />;
+        } else {
+            return (
+                <div>
+                    <Link to={`/editUser/${this.state.user.id}`}>Edit</Link>
+                    <div>User Name: {this.state.user.userName}</div>
+                    <div>Pet: {this.state.user.pet}</div>
+                    <div>Bio: {this.state.user.bio}</div>
+                    <br />
+                    <Link to={`/${this.state.user.id}/pets`}>Continue to pets</Link>
+                    <br /><br />
+                    <button onClick={(e) => this._handleDelete(e, this.state.user.id)}>Delete</button>
+                    <br /><br />
+                    <Link to={`/users`}>Go back</Link>
+                </div>
+            );
+        }
     }
 }
 

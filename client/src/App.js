@@ -1,124 +1,45 @@
+// imp
+
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import styled from 'styled-components';
-import Home from './components/Home';
+import Pets from './components/Pets';
+import Pet from './components/Pet';
+// import Create from './components/CreateParty';
+// import EditParty from './components/EditParty';
+
+import Users from './components/Users';
+import HomePage from './components/HomePage';
 import User from './components/User';
-import AddNewPost from './components/AddNewPost';
-import LoginView from './components/LoginView';
-import Signup from './components/SignUp';
-import LoginButton from './components/Login';
-import NavBar from './styles/NavBar';
-import UserProfile from './components/UserProfile';
-import axios from 'axios';
-
-
-
+import CreateUser from './components/CreateUser';
+import EditUser from './components/EditUser';
+import styled from 'styled-components';
+import NavBar from './components/NavBar';
 
 class App extends Component {
-  constructor(){
-    super()
-    this.state = {
-        loggedIn: false,
-        userId: "",
-        username: "",
-        password:"",
-        image: "",
-        loginError: "",
-    }
-}
+  render() {
+    return (
+      <Router>
+        <div>
+          <NavBar />
+          {/* Routing User Not Logged In */}
+          <Route exact path='/' component={HomePage} />
+          <Route exact path='/pets' component={Pets} />
+          <Route exact path='/pet/:petId' component={Pet} />
+          {/* <Route exact path='/createParty' component={CreateParty} />
+          <Route exact path='/edit/:partyId' component={EditParty} /> */}
+          {/* <Route exact path='/streamers/:partyId' component={Streamers} /> */}
+          <Route exact path='/users' component={Users} />
+          <Route exact path='/user/:userId' component={User} />
+          <Route exact path='/createUser'component={CreateUser} />
+          <Route exact path='/editUser/:userId' component={EditUser} />
 
-_handleLogin = (event) => {
-event.preventDefault();
-
-const username = event.target.username.value;
-const password = event.target.password.value;
-
-axios.post(`/api/user/login/`, {username, password})
-  .then((res) => {
-    
-    const newState = {...this.state};
-
-    if(res.data.username){
-      newState.userId = res.data._id;
-      newState.loggedIn = true;
-      newState.username = res.data.username;
-      newState.image = res.data.image;
-      newState.password = res.data.password;
-      newState.loginError = "";
-    } else {
-      newState.loginError = res.data;
-    };
-    this.setState(newState);
-
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-}
-
-_handleSignup = (username, password) => {
-axios.post('/api/user/signup/', {username, password})
-  .then((res) => {
-    const newState = {...this.state};
-      newState.userId = res.data._id;
-      newState.loggedIn = true;
-      newState.username = res.data.username;
-      newState.password = res.data.password;
-      newState.image = res.data.firstName;
-      newState.loginError = "";
-
-      this.setState(newState);
-    })
-}
-
-_handleDeleteUser = () => {
-axios.get(`/api/user/${this.state.userId}/delete`).then(() => {
-  this._handleLogout();
-}).catch((err) => {
-  console.log("error sending delete");
-  console.log(err);
-})
-}
-_handleLogout = (event) => {
-  const newState = {...this.state};
-  newState.username = "";
-  newState.password = "";
-  newState.image = "";
-  newState.loginError = "";
-  newState.loggedIn = false;
-
-  this.setState(newState);
-}
-   render() {
-  const NavBar = styled.div`
-    display: flex;
-    justify-content: space-between;`
-
-  return (
-    <Router>
-    <div>
-    <div>
-      <NavBar>
-        <Link to="/">Home</Link>
-        <LoginButton loggedIn = {this.state.loggedIn}  handleLogout={this._handleLogout} username={this.state.username} password={this.state.password}/>
-      </NavBar>
-    </div>
-    <div>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" render={userprofile => 
-            <LoginView {...userprofile} 
-              handleLogin={this._handleLogin}
-              loginError={this.state.loginError}
-              loggedIn={this.state.loggedIn}
-              username={this.state.username}
-              />} />
-        <Route exact path="/signup" render={userprofile => 
-            <Signup {...userprofile}
-              handleSignup={this._handleSignup}
-              loggedIn={this.state.loggedIn}
-              />} />
-              </div>
-            </div>
+          {/* Routing User Is Logged In */}
+          <Route exact path='/:userId/pets' component={Pets} />
+          <Route exact path='/:userId/pet/:petId' component={Pet} />
+          {/* <Route exact path='/:userId/createParty' component={CreateParty} />
+          <Route exact path='/:userId/edit/:partyId' component={EditParty} />
+          <Route exact path='/:userId/streamers/:partyId' component={Streamers} /> */}
+        </div>
       </Router>
     );
   }

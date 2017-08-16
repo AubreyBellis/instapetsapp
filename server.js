@@ -3,7 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const UserController = require("./controllers/user");
-const UserProfileController = require("./controllers/userProfile");
+const PetController = require("./controllers/pet");
+// const BoardController = require("./controllers/board")
+
 const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI); //mongodb://localhost/pets
@@ -19,14 +21,24 @@ connection.on('error', (err) => {
   console.log('Mongoose default connection error: ' + err);
 }); 
 
-app.use(express.static(__dirname + '/client/build/'));
-  app.get('/', (req,res) => {
-    res.sendFile(__dirname + '/client/build/index.html')
-  })
+
 
 app.use(bodyParser.json());
+
+
+
+// app.use(express.static(__dirname + '/client/build/'));
 app.use('/api/user', UserController);
-app.use('/api/userprofile', UserProfileController);
+app.use('/api/pet', PetController);
+// app.use('/api/board', BoardController);
+
+
+// app.get("/", (req, res) => {
+//   res.sendFile(__dirname + "/client/build/index.html");
+// });
+
+
+// app.use('/api/userprofile', UserProfileController);
 
 
 

@@ -1,82 +1,68 @@
 const express = require('express');
-const User = require("../models/user");
+const Pet = require('../models/pet');
+const User = require('../models/user');
 const router = express.Router();
 
-
-
-router.get("/", (req, res) => {
-    User.find().then((users) => {
+router.get('/', (req, res) => {
+    User.find().then( (users) => {
         res.json(users);
-    });
+    })
+    .catch( (err) => {
+        console.log(err);
+    })
 });
 
-router.get("/:id", (req, res) => {
-    User.findById(req.params.id).then((user) => {
+router.get('/:userId', (req, res) => {
+    User.findById(req.params.userId).then( (user) => {
         res.json(user);
-    });
-});
-
-router.put("/:id/password", (req, res) => {
-    const newPassword = req.body.newPassword;
-    const oldPassword = req.body.oldPassword;
-    User.findByIdAndUpdate(req.params.id).then((user) => {
-        if(user.password === oldPassword){
-            user.password = newPassword;
-            user.save();
-            res.send("password saved");
-            consle.log(`user: ${user.username} updated their password`);
-        } else {
-            res.send("password incorrect");
-        }
-    }).catch((err) => {
-        console.log(err);
-    });
-});
-
-router.get("/:id/delete", (req, res) => {
-    const userId = req.params.id;
-    User.findByIdAndRemove(userId).then(() => {
-        console.log(`user ${userId} deleted their account :'(`);
-        res.send("success");
-    }).catch((err) => {
-        console.log("no success");
+    })
+    .catch( (err) => {
         console.log(err);
     })
-})
-router.post("/login/", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+});
 
-    User.find().then((users) => {
-        const findUser = users.find((user) => {
-            return user.username === username;
-        });
-        if (userIWant.password === password){
-            res.json(findUser);
-        } else {
-            res.send("wrong password");
-        }
-        res.json(findUser);
-    })
-        .catch((err) => {
-            res.send("can't not find username");
-        })
-})
-router.post("/signup", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
+router.post('/', (req, res) => {
     const newUser = new User();
-    newUser.username = username;
-    newUser.password = password;
-    newUser.image = image;
-
-    newUser.save().then((user) => {
+    newUser.username = req.body.username
+    newUser.pet = req.body.pet
+    newUser.bio = req.body.bio
+    newUser.save().then( (user) => {
         res.json(user);
-    }).catch((err) => {
+    }).catch( (err) => {
         console.log(err);
-    });
+    })
 })
+
+router.put('/', (req, res) => {
+    User.findByIdAndUpdate(req.body._id, req.body).then( (user) => {
+            console.log('Saved update');
+        })
+        .catch( (err) => {
+            console.log(err);
+        })
+});
+
+// router.post('/favoriteParty', (req, res) => {
+//     User.findById(req.body.userId).then( (user) => {
+//             user.savedParties.push(req.body.favoriteParty)
+//             user.save().then( (res) => {
+//                 console.log('Successfully add party');
+//             }).catch( (err) => {
+//                 console.log(err);
+//             })
+//         })
+//         .catch( (err) => {
+//             console.log(err);
+//         })
+// });
+
+// router.get('/delete/:userId', (req, res) => {
+//     User.findByIdAndRemove(req.params.userId).then( (user) => {
+//             console.log(`${user.userName} was deleted`)
+//         })
+//         .catch( (err) => {
+//             console.log(err);
+//         })
+// });
 
 module.exports = router;
- 

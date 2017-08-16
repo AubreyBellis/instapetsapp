@@ -31,12 +31,12 @@ class LoginView extends Component {
                 {this.props.loginError ? <p>{this.props.loginError}</p> : null}
                 <form onSubmit={this.props.handleLogin}>
                     <div>
-                    <label htmlFor="username">Username: </label>
-                    <input name="username" type="text" required/>  
+                        <label htmlFor="username">Username: </label>
+                        <input name="username" value={this.props.username} type="text" />  
                     </div>
                     <div>
-                    <label htmlFor="password">Password: </label>
-                     <input name="password" type="password" required/> 
+                        <label htmlFor="password">Password: </label>
+                        <input name="password" type="text" value={this.props.password}/> 
                     </div>
                     <button>Log in</button>
                 </form>

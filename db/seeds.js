@@ -2,83 +2,62 @@ require("dotenv").config();
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
 
-//
-
-var UserComment = require('../models/userComment');
-var Post = require('../models/post');
-var UserProfile = require('../models/userProfile');
 var User = require('../models/user');
+var Pet = require('../models/pet');
+var Description = require('../models/description');
+
 
 mongoose.Promise = global.Promise;
 
-User.remove({}, function(err){
-    console.log(err);
-});    
-Post.remove({}, function(err){
-  console.log(err);
-});
-// UserComment.remove({}, function(err){
-//   console.log(err);
-// });
-UserProfile.remove({}, function(err){
-  console.log(err);
-});
+User.remove({}, (err) => console.log(err));
+Pet.remove({}, (err) => console.log(err));
+
+
 
 
 
 // creating users
-const user1 = new User({
-  userName: 'Reese',
-  password:'abbelove3',
-  image:""
+const aubrey = new User({
+  username: 'Aubrey',
+ pet:"German Shepherd Dog",
+ bio:"warehtjoesdhgjsdg"
+ 
 });
-const user2 = new User({
-  userName: "PiperGirl",
-  password: "jMatt",
-  image:""
+const jessica = new User({
+  username: "J",
+  pet:"Hound",
+  bio:"sjfhksjdfhkjdsfh"
 });
-//creating post 
-const Post1 = new Post({
-  newTitle:"A day at the Park",
-  newImage:"",
-  newText:"",
-  comment:[]
- });
-const Post2 = new Post({
-  newTitle:"Feelin' this weather",
-  newImage:"",
-  newText:"",
-  comment:[]
- });
- const Post3 = new Post({
-  newTitle:"Always happy!",
-  newImage:"",
-  newText:"",
-  comment:[]
+//creating pet
+const reese = new Pet({
+  name:"A day at the Park",
+  image:"http://i.imgur.com/C4uNhxa.jpg",
+  description:"Little bae cooling off."
+});
+const piper = new Pet({
+  name:"Feelin' this weather",
+  image:"http://i.imgur.com/C4uNhxa.jpg",
+  description:"Smarty pants"
  });
 
- const UserProfile1 = new UserProfile({
-  username:"Reese",
-  pet:"German Shepherd Dog",
-  images:[]
- })
 
 
- const admin = new User({
-  username: "Aubrey",
-  password: "reese128",
-  admin: true,
-})
 
 
-Post1.save().then(() => console.log("post saved!"));
-Post2.save().then(() => console.log("post saved!"));
-Post3.save().then(() => console.log("post saved!"));
 
-user1.save().then(() => console.log("user saved!"));
-user2.save().then(() => console.log("user saved"));
 
-UserProfile1.save().then(() => console.log("new user profile saved"));
+aubrey.save(function(err) {
+  if (err) console.log(err);
+
+  console.log('aubrey');
+});
+
+reese.save(function(err) {
+  if (err) console.log(err);
+
+  console.log('reese');
+});
+
 
 
 mongoose.connection.close();
