@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link, Redirect } from "react-router-dom";
+import styled from 'styled-components';
 
+const UserWrapper = styled.div`
+display: flex;
+justify-content: center;
+flex-direction:column;
+align-content: space-around;
+flex-wrap: wrap;
+padding-top: 20px;
+font-size: 18px;
+
+`;
+const UserContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction:column;
+width: 100%;
+padding-bottom: 20px;
+`
 class EditUser extends Component {
     constructor() {
         super();
@@ -63,8 +82,13 @@ class EditUser extends Component {
         } else {
             return (
                 <div>
-                    <h1>Edit User</h1>
+                   
+                    
+                    <UserWrapper>
                     <form onSubmit={this._editUser}>
+                    
+                    <UserContainer>
+                    <h1>Edit User</h1>
                         <input onChange={this._handleUserChange}
                             type='text' name='username'
                             value={this.state.user.username}
@@ -83,9 +107,11 @@ class EditUser extends Component {
                         <br />
                         <br />
                         <button>Submit Changes</button>
+                        <Link to={`/user/${this.state.user._id}`}>Go back</Link>
+                        </UserContainer>
                     </form>
+                    </UserWrapper>
                     <br />
-                    <Link to={`/user/${this.state.user._id}`}>Go back</Link>
                 </div>
             );
         }

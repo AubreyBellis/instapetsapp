@@ -9,10 +9,7 @@ const HomePageStyling = styled.div`
     align-content: space-around;
     flex-wrap: wrap;
     padding-bottom: 40px;
-    h1 {
-        font-family: 'Press Start 2P', cursive;
-    }
-`;
+`
 
 const HomePageContainer = styled.div`
     display: flex;
@@ -29,14 +26,14 @@ class Homepage extends Component {
                     <h1>Pet PAWty.</h1>
                 </HomePageContainer>
                 <HomePageContainer>
-                <img src="http://i.imgur.com/cQRk6X4.jpg" alt="BackgroundImage.jpg"/>
+                <img src="http://i.imgur.com/dV5eqZL.jpg" alt="puppyparty.jpg"/>
                 </HomePageContainer>
                 <HomePageContainer>
                     <Link to='/pets/'><button className='normalButton'>Pet's Here</button></Link>
                 </HomePageContainer>    
                 <br /><br /><br />
                 <HomePageContainer>
-                    <Link to='/users'><button className='normalButton'>User Login</button></Link>
+                    <Link to='/users'><button className='normalButton'>Pet Ma & Pa's</button></Link>
                 </HomePageContainer>
              </HomePageStyling> 
         );

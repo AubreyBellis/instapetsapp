@@ -3,22 +3,23 @@ var mongoose = require('mongoose');
 
 
 
-const descriptionSchema = mongoose.Schema({
- breed: String,
- characteristics:String
+const petSchema = mongoose.Schema({
+ petName: String,
+ image: String,
+ bio: String
  
 })
 
 const userSchema = mongoose.Schema({
-    username: String,
+    userName: String,
     pet:String,
     bio:String
   });
   
-const petSchema = mongoose.Schema({
-  petname:String,
-  image:String,
+const partySchema = mongoose.Schema({
+  partyName:String,
   description:String,
+  pets:[petSchema]
 });
 
 
@@ -44,7 +45,7 @@ userSchema.pre('save', function(next){
     next();
   });
 
-  descriptionSchema.pre('save', function(next){
+  partySchema.pre('save', function(next){
     now = new Date();
     this.updated_at = now;
     if ( !this.created_at ) {
@@ -56,13 +57,13 @@ userSchema.pre('save', function(next){
 
 
 var User = mongoose.model("User", userSchema);
-var Description = mongoose.model("Description",descriptionSchema);
+var Party = mongoose.model("Party",partySchema);
 var Pet = mongoose.model("Pet", petSchema);
 
 
 
 module.exports = {
 
-    User, Description, Pet
+    User, Party, Pet
 
 };
