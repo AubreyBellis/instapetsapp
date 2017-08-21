@@ -47,7 +47,7 @@ router.put('/', (req, res) => {
 
 router.get('/delete/:userId', (req, res) => {
     User.findByIdAndRemove(req.params.userId).then( (user) => {
-            console.log(`${user.userName} was deleted`)
+            console.log('user was deleted')
         })
         .catch( (err) => {
             console.log(err);
