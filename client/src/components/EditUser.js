@@ -4,23 +4,27 @@ import { Link, Redirect } from "react-router-dom";
 import styled from 'styled-components';
 
 const UserWrapper = styled.div`
-display: flex;
-justify-content: center;
-flex-direction:column;
-align-content: space-around;
-flex-wrap: wrap;
-padding-top: 20px;
-font-size: 18px;
-
+    display: flex;
+    justify-content: center;
+    align-content: space-around;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    font-size: 18px;
+    
 `;
+
 const UserContainer = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction:column;
-width: 100%;
-padding-bottom: 20px;
-`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 20px;
+    h1 {
+        font-family: 'Press Start 2P', cursive;
+        margin-bottom: 0px;
+    }
+`;
+
 class EditUser extends Component {
     constructor() {
         super();
@@ -28,10 +32,11 @@ class EditUser extends Component {
             redirect: false,
             user: {
                 _id: '',
-                username: '',
+                userName: '',
+                firstName: '',
+                lastName: '',
+                email: '',
                 pet: '',
-                bio: ''
-              
             }
         }
     }
@@ -42,10 +47,11 @@ class EditUser extends Component {
             this.setState({
                 user: {
                     _id: res.data._id,
-                    username: res.data.username,
+                    userName: res.data.userName,
+                    firstName: res.data.firstName,
+                    lastName: res.data.lastName,
+                    email: res.data.email,
                     pet: res.data.pet,
-                    bio: res.data.bio
-                   
                 }
             })
         })
@@ -58,7 +64,7 @@ class EditUser extends Component {
         e.preventDefault();
         axios.put('/api/user', this.state.user)
             .then((res) => {
-                console.log('edited user information');
+                console.log('Sucessfully sent edited user information');
             })
             .catch((err) => {
                 console.log(err);
@@ -81,38 +87,52 @@ class EditUser extends Component {
             return <Redirect to={`/user/${this.state.user._id}`} />;
         } else {
             return (
-                <div>
-                   
-                    
-                    <UserWrapper>
-                    <form onSubmit={this._editUser}>
-                    
+                <UserWrapper>
                     <UserContainer>
                     <h1>Edit User</h1>
+                    </UserContainer>
+                    <form onSubmit={this._editUser}>
+                        <UserContainer>
                         <input onChange={this._handleUserChange}
-                            type='text' name='username'
-                            value={this.state.user.username}
+                            type='text' name='userName'
+                            value={this.state.user.userName}
                             placeholder='User Name' />
-                        <br />
+                        </UserContainer>
+                        <UserContainer>
                         <input onChange={this._handleUserChange}
-                            type='text' name='pet'
-                            value={this.state.user.pet}
-                            placeholder='Pet' />
-                        <br />
+                            type='text' name='firstName'
+                            value={this.state.user.firstName}
+                            placeholder='First Name' />
+                        </UserContainer>
+                        <UserContainer>
                         <input onChange={this._handleUserChange}
                             type='text'
-                            name='bio'
-                            value={this.state.user.bio}
-                            placeholder='Bio' />
-                        <br />
-                        <br />
-                        <button>Submit Changes</button>
-                        <Link to={`/user/${this.state.user._id}`}>Go back</Link>
+                            name='lastName'
+                            value={this.state.user.lastName}
+                            placeholder='Last Name' />
+                        </UserContainer>
+                        <UserContainer>
+                        <input onChange={this._handleUserChange}
+                            type='text'
+                            name='email'
+                            value={this.state.user.email}
+                            placeholder='Email' />
+                        </UserContainer>
+                        <UserContainer>
+                        <input onChange={this._handleUserChange}
+                            type='text'
+                            name='pet'
+                            value={this.state.user.pet}
+                            placeholder='pet' />
+                        </UserContainer>
+                        <UserContainer>
+                        <button className='normalButton'>Submit</button>
                         </UserContainer>
                     </form>
-                    </UserWrapper>
-                    <br />
-                </div>
+                    <UserContainer>
+                    <Link to={`/user/${this.state.user._id}`}><button className='normalButton'>Backzie</button></Link>
+                    </UserContainer>
+                </UserWrapper>
             );
         }
     }

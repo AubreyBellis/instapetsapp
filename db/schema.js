@@ -6,14 +6,16 @@ var mongoose = require('mongoose');
 const petSchema = mongoose.Schema({
  petName: String,
  image: String,
- bio: String
+ about: String
  
 })
 
 const userSchema = mongoose.Schema({
     userName: String,
-    pet:String,
-    bio:String
+    firstName:String,
+    lastName:String,
+    email:String,
+    pet:String
   });
   
 const partySchema = mongoose.Schema({

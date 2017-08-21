@@ -6,7 +6,7 @@ import Pets from './components/Pets';
 import Pet from './components/Pet';
 import CreatePet from './components/CreatePet';
 // import EditPet from './components/EditPet';
-import Description from './components/Description';
+// import Party from './components/Party';
 import Users from './components/Users';
 import HomePage from './components/HomePage';
 import User from './components/User';
@@ -14,6 +14,7 @@ import CreateUser from './components/CreateUser';
 import EditUser from './components/EditUser';
 import styled from 'styled-components';
 import NavBar from './components/NavBar';
+// import Parties from './components/Parties';
 
 class App extends Component {
   render() {
@@ -27,7 +28,7 @@ class App extends Component {
           <Route exact path='/pet/:petId' component={Pet} />
           <Route exact path='/createPet' component={CreatePet} />
           {/* <Route exact path='/edit/:partyId' component={EditParty} /> */} 
-          <Route exact path='/descriptions/:petId' component={Description} />
+          {/* <Route exact path='/parties/:petId' component={Parties} /> */}
           <Route exact path='/users' component={Users} />
           <Route exact path='/user/:userId' component={User} />
           <Route exact path='/createUser'component={CreateUser} />
@@ -38,7 +39,7 @@ class App extends Component {
           <Route exact path='/:userId/pet/:petId' component={Pet} />
           <Route exact path='/:userId/createPet' component={CreatePet} />
           {/* <Route exact path='/:userId/edit/:petId' component={EditPet} /> */}
-          <Route exact path='/:userId/descriptions/:petId' component={Description} /> 
+          {/* <Route exact path='/:userId/party/:petId' component={Party} />  */}
         </div>
       </Router>
     );

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import axios from 'axios';
 import { Link } from "react-router-dom"
+import Pet from './Pet';
 
 const PetStyle = styled.div`
     image {
@@ -16,18 +17,24 @@ class Pets extends Component {
         this.state = {
             user: '',
             userLogged: false,
+            id: '',
+            petName: '',
+            description: '',
             pets: []
         }
     }
 
     componentWillMount() {
-        axios.get("/api/pet").then( (res) => {
-            this.setState({ pets: res.data });
-        }).catch( (error) => {
-            console.log(error);
+        const id = this.props.match.params.petId;
+        axios.get(`/api/pet/${id}`).then((res) => {
+            this.setState({
+                id: res.data._id,
+                petName: res.data.petName,
+                description: res.data.description,
+             
+            })
         })
-
-        // GET USER
+        // Get user
         if (this.props.match.params.userId) {
             this.setState({
                 userLogged: true,
@@ -43,28 +50,26 @@ class Pets extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <h1>Pets</h1>
-                <div>
-                 {this.state.userLogged ? <Link to={`/${this.state.user_id}/createpet`}>Add your pet to the pawty!</Link> :
-                    <Link to='/createpet'>Join the PAWty!</Link>}  
-                {this.state.pets.map( (pet, i) => {
-                    return (
-                        <div key={i}>
-                        {pet.petname}
-                        <img src={pet.image} alt='' />
-                        {this.state.userLogged ? <a href={`/pets/${pet._id}`}>Go to</a> : 
-                            <a href={`/pets/${pet._id}`}>Go to</a>}
-                        </div>
-                    )
-                })}
-                <br />
-                {this.state.userLogged ? <Link to={`/user/${this.state.user._id}`}>Go back</Link> : null}
-                </div>
-            </div>
-        );
+            return (
+                <buttonStyle>
+                    
+                    {this.state.userLogged ? <Link to={`/${this.state.user._id}/users/${this.state.id}`}><button className='normalButton'>GO BACK</button></Link> :
+                        <Link to={`/users/${this.state.id}`}><button className='normalButton'>GO BACK</button></Link>}
+                  
+                    <div>{this.state.userName}</div>
+                    <PetStyle>
+                    {this.state.pets.map( (pet, i) => {
+                        return (
+                            <Pet key={i} userName={pet.userName}
+                                image={pet.image}
+                                bio={pet.bio}/>
+                        )
+                    })}
+                    </PetStyle>
+                </buttonStyle>
+            );
+        }
     }
-}
+
 
 export default Pets;

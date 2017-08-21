@@ -23,9 +23,12 @@ router.get('/:userId', (req, res) => {
 
 router.post('/', (req, res) => {
     const newUser = new User();
-    newUser.username = req.body.username
+    newUser.userName = req.body.userName
+    newUser.firstName = req.body.firstName
+    newUser.lastName = req.body.lastName
+    newUser.email = req.body.email
     newUser.pet = req.body.pet
-    newUser.bio = req.body.bio
+
     newUser.save().then( (user) => {
         res.json(user);
     }).catch( (err) => {
@@ -35,18 +38,16 @@ router.post('/', (req, res) => {
 
 router.put('/', (req, res) => {
     User.findByIdAndUpdate(req.body._id, req.body).then( (user) => {
-            console.log('Saved update');
+            console.log('edit success');
         })
         .catch( (err) => {
             console.log(err);
         })
 });
 
-
-
 router.get('/delete/:userId', (req, res) => {
     User.findByIdAndRemove(req.params.userId).then( (user) => {
-            console.log(`${user.username} was deleted`)
+            console.log(`${user.userName} was deleted`)
         })
         .catch( (err) => {
             console.log(err);
