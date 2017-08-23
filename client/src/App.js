@@ -22,7 +22,7 @@ class App extends Component {
       <Router>
         <div>
           <NavBar />
-          {/* Routing User NOT Logged In */}
+   
           <Route exact path='/' component={HomePage} />
           <Route exact path='/pets' component={Pets} />
           <Route exact path='/pet/:petId' component={Pet} />
@@ -34,7 +34,6 @@ class App extends Component {
           <Route exact path='/createUser'component={CreateUser} />
           <Route exact path='/editUser/:userId' component={EditUser} />
 
-          {/* Routing User Is Logged In */}
           <Route exact path='/:userId/pets' component={Pets} />
           <Route exact path='/:userId/pet/:petId' component={Pet} />
           <Route exact path='/:userId/createPet' component={CreatePet} />
