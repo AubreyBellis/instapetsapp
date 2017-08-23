@@ -17,7 +17,7 @@ Pet.remove({}, (err) => console.log(err));
 
 
 
-// creating usersnp
+// creating users
 
 const user1 = new User({
   userName: 'Aubs0128',

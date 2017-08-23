@@ -37,8 +37,7 @@ class App extends Component {
           <Route exact path='/:userId/pets' component={Pets} />
           <Route exact path='/:userId/pet/:petId' component={Pet} />
           <Route exact path='/:userId/createPet' component={CreatePet} />
-          {/* <Route exact path='/:userId/edit/:petId' component={EditPet} /> */}
-          {/* <Route exact path='/:userId/party/:petId' component={Party} />  */}
+          
         </div>
       </Router>
     );
